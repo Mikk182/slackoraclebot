@@ -65,8 +65,9 @@ This bot demonstrates many of the core features of Botkit:
 
 
 if (!process.env.token) {
-    console.log('Error: Specify token in environment');
-    process.exit(1);
+	process.env.token = 'xoxb-72033392916-pwi2GIGshF97O8ZlWhph7cEc'
+    //console.log('Error: Specify token in environment');
+    //process.exit(1);
 }
 
 var Botkit = require('./lib/Botkit.js');
@@ -96,9 +97,9 @@ controller.hears(['hello', 'hi'], 'direct_message,direct_mention,mention', funct
 
     controller.storage.users.get(message.user, function(err, user) {
         if (user && user.name) {
-            bot.reply(message, 'Hello ' + user.name + '!!');
+            bot.reply(message, 'Hello *' + user.name + '* !!');
         } else {
-            bot.reply(message, 'Hello.');
+            bot.reply(message, 'Hello humain !');
         }
     });
 });
@@ -113,7 +114,7 @@ controller.hears(['call me (.*)', 'my name is (.*)'], 'direct_message,direct_men
         }
         user.name = name;
         controller.storage.users.save(user, function(err, id) {
-            bot.reply(message, 'Got it. I will call you * ' + user.name + ' * from now on.');
+            bot.reply(message, 'Got it. I will call you *' + user.name + '* from now on.');
         });
     });
 });
@@ -122,13 +123,13 @@ controller.hears(['what is my name', 'who am i'], 'direct_message,direct_mention
 
     controller.storage.users.get(message.user, function(err, user) {
         if (user && user.name) {
-            bot.reply(message, 'Your name is ' + user.name);
+            bot.reply(message, 'Your name is  *' + user.name + '* ');
         } else {
             bot.startConversation(message, function(err, convo) {
                 if (!err) {
                     convo.say('I do not know your name yet!');
                     convo.ask('What should I call you?', function(response, convo) {
-                        convo.ask('You want me to call you * `' + response.text + '`* ?', [
+                        convo.ask('You want me to call you `' + response.text + '` ?', [
                             {
                                 pattern: 'yes',
                                 callback: function(response, convo) {
@@ -221,7 +222,7 @@ controller.hears(['what'],
         var uptime = formatUptime(process.uptime());
 
         bot.reply(message,
-            'Ca va et toi ?');
+            'Ça va et toi ?');
 
     });
 	
@@ -244,10 +245,33 @@ controller.hears(['CC', 'café', 'coffee', 'caf'],
 
 		
 		var e=new Date,o=e.getMinutes(),a=Math.floor(Math.random()*(60-o+1))+o;
-		var response = ":coffee: Voici l'heure de ton prochain café: {0}h{1}, humain !".replace(/\{0\}/,e.getHours()).replace(/\{1\}/,a);
 		
+		//Erreur
+		//if (user && user.name) {
+		//	var response = ":coffee: Voici l'heure de ton prochain café: {0}h{1}, "+ user.name " !".replace(/\{0\}/,e.getHours()).replace(/\{1\}/,a);
+        //} else {
+			var response = ":coffee: Voici l'heure de ton prochain café: {0}h{1}, humain !".replace(/\{0\}/,e.getHours()).replace(/\{1\}/,a);
+        //}
         bot.reply(message, response);
-
+		
+		//var timeVar = "today at {0}h{1}".replace(/\{0\}/,e.getHours()).replace(/\{1\}/,a);
+		//bot.reply(message, reminder);
+		//bot.botkit.log('**Reminder time** ' + e.getTime());
+		//bot.botkit.log('**Token** ' + process.env.token);
+		//bot.api.reminders.add(token= process.env.token, text='CC!', time='in 1 minute');
+		
+		bot.botkit.log(message.user.name);
+		
+		bot.api.reminders.add({
+			token: process.env.token,
+			text: 'CC!',
+			time: 'in 1 minute',
+			user: 'U22GS8P6X'
+		}, function(err, res) {
+			if (err) {
+				bot.botkit.log('Failed to add reminder :(', err);
+			}
+		});
     });
 
 controller.hears(['uptime', 'identify yourself', 'who are you', 'what is your name'],
