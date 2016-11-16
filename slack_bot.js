@@ -63,6 +63,7 @@ This bot demonstrates many of the core features of Botkit:
 
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~*/
 
+var moment = require('moment-timezone');
 
 if (!process.env.token) {
     console.log('Error: Specify token in environment');
@@ -242,35 +243,11 @@ controller.hears(['CC', 'café', 'coffee', 'caf'],
         var hostname = os.hostname();
         var uptime = formatUptime(process.uptime());
 
+		var e = moment().tz("Europe/Paris").format(), o = e.getMinutes(), a = Math.floor(Math.random()*(60-o))+o;
 		
-		var e=new Date,o=e.getMinutes(),a=Math.floor(Math.random()*(60-o+1))+o;
+		var response = ":coffee: Voici l'heure de ton prochain café: {0}h{1}, humain !".replace(/\{0\}/,e.getHours() + 1).replace(/\{1\}/,a);
 		
-		//Erreur
-		//if (user && user.name) {
-		//	var response = ":coffee: Voici l'heure de ton prochain café: {0}h{1}, "+ user.name " !".replace(/\{0\}/,e.getHours()).replace(/\{1\}/,a);
-        //} else {
-			var response = ":coffee: Voici l'heure de ton prochain café: {0}h{1}, humain !".replace(/\{0\}/,e.getHours()).replace(/\{1\}/,a);
-        //}
         bot.reply(message, response);
-		
-		//var timeVar = "today at {0}h{1}".replace(/\{0\}/,e.getHours()).replace(/\{1\}/,a);
-		//bot.reply(message, reminder);
-		//bot.botkit.log('**Reminder time** ' + e.getTime());
-		//bot.botkit.log('**Token** ' + process.env.token);
-		//bot.api.reminders.add(token= process.env.token, text='CC!', time='in 1 minute');
-		
-		bot.botkit.log(message.user.name);
-		
-		bot.api.reminders.add({
-			token: process.env.token,
-			text: 'CC!',
-			time: 'in 1 minute',
-			user: 'U22GS8P6X'
-		}, function(err, res) {
-			if (err) {
-				bot.botkit.log('Failed to add reminder :(', err);
-			}
-		});
     });
 
 controller.hears(['uptime', 'identify yourself', 'who are you', 'what is your name'],
