@@ -248,18 +248,6 @@ controller.hears(['CC', 'café', 'coffee', 'caf'],
 		var response = ":coffee: Voici l'heure de ton prochain café: {0}h{1}, humain !".replace(/\{0\}/,e.hours()).replace(/\{1\}/,a);
 		
         bot.reply(message, response);
-		
-		bot.api.reminders.add({
--			token: process.env.token,
-			creator: "U22GS8P6X",
--			text: 'CC!',
--			time: 'in 1 minute',
--			user: 'U22GS8P6X'
--		}, function(err, res) {
--			if (err) {
--				bot.botkit.log('Failed to add reminder :(', err);
--			}
--		});
     });
 
 controller.hears(['uptime', 'identify yourself', 'who are you', 'what is your name'],
