@@ -243,9 +243,9 @@ controller.hears(['CC', 'café', 'coffee', 'caf'],
         var hostname = os.hostname();
         var uptime = formatUptime(process.uptime());
 
-		var e = moment().tz("Europe/Paris").format(), o = e.minute(), a = Math.floor(Math.random()*(60-o))+o;
+		var e = moment().tz("Europe/Paris"), o = e.minutes(), a = Math.floor(Math.random()*(60-o))+o;
 		
-		var response = ":coffee: Voici l'heure de ton prochain café: {0}h{1}, humain !".replace(/\{0\}/,e.getHours() + 1).replace(/\{1\}/,a);
+		var response = ":coffee: Voici l'heure de ton prochain café: {0}h{1}, humain !".replace(/\{0\}/,e.hours() + 1).replace(/\{1\}/,a);
 		
         bot.reply(message, response);
     });
