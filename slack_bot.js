@@ -237,20 +237,37 @@ controller.hears(['bien', 'good', 'nice', 'cool', 'bueno', 'fine', 'well'],
     });
 
 var coffeeTime = moment().tz("Europe/Paris");
+var tentatives = 0;
 
 controller.hears(['cc', 'café', 'coffee', 'caf'],
     'direct_message,direct_mention,mention', function(bot, message) {
-
+    
         var hostname = os.hostname();
         var uptime = formatUptime(process.uptime());
-
-        var now = moment().tz("Europe/Paris");
     
+        var now = moment().tz("Europe/Paris"); 
+
         if (now <= coffeeTime) {
-           bot.reply(message, 'Hahaha... Misérable humain! Tu ôses remettre en question la parole de l\'oracle?'
-                + ' :point_down: Ton prochain café est à ' + coffeeTime.format('HH[h]mm'));
+            
+            tentatives++;
+            
+            if (tentatives >= 5) {
+                
+                coffeeTime = coffeeTime.add(Math.round(Math.random() * 15), 'minutes'); 
+                
+                bot.reply(message,  'Puisque tu insistes, voici la nouvelle heure: ' 
+                    + coffeeTime.format('HH[h]mm') + ' :triumph:');
+                
+            } else {
+                
+                bot.reply(message, 'Hahaha... Misérable humain! Tu ôses remettre en question la parole de l\'oracle?'
+                    + ' :point_down: Ton prochain café est à ' + coffeeTime.format('HH[h]mm'));
+            }            
         } else {
-            coffeeTime = now.add(Math.round(Math.random() * 60), 'minutes');
+            
+            tentatives = 0;
+            
+            coffeeTime = now.add(Math.round(Math.random() * 60), 'minutes'); 
             
             bot.reply(message, ':coffee: Écoutes bien petit humain, voici l\'heure de ton prochain café: ' 
                 + coffeeTime.format('HH[h]mm'));
