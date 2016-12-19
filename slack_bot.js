@@ -81,7 +81,6 @@ var bot = controller.spawn({
     token: process.env.token
 }).startRTM();
 
-
 controller.hears(['hello', 'hi'], 'direct_message,direct_mention,mention', function(bot, message) {
 
     bot.api.reactions.add({
@@ -236,7 +235,9 @@ controller.hears(['bien', 'good', 'nice', 'cool', 'bueno', 'fine', 'well'],
             'Ok, great !');
 
     });
-	
+
+var coffeeTime = moment().tz("Europe/Paris");
+
 controller.hears(['cc', 'café', 'coffee', 'caf'],
     'direct_message,direct_mention,mention', function(bot, message) {
 
@@ -244,14 +245,17 @@ controller.hears(['cc', 'café', 'coffee', 'caf'],
         var uptime = formatUptime(process.uptime());
 
         var now = moment().tz("Europe/Paris");
-        var timeToWait = Math.round(Math.random() * 60);
-        var coffeeTime = now.add(timeToWait, 'minutes');
-		
-        var response = ":coffee: Écoutes bien petit humain, voici l'heure de ton prochain café: {0}"
-            .replace(/\{0\}/, coffeeTime.format('HH[h]mm'));
-		
-        bot.reply(message, response);
-    });
+    
+        if (now <= coffeeTime) {
+           bot.reply(message, 'Hahaha... Misérable humain! Tu ôses remettre en question la parole de l\'oracle?'
+                + ' :point_down: Ton prochain café est à ' + coffeeTime.format('HH[h]mm'));
+        } else {
+            coffeeTime = now.add(Math.round(Math.random() * 60), 'minutes');
+            
+            bot.reply(message, ':coffee: Écoutes bien petit humain, voici l\'heure de ton prochain café: ' 
+                + coffeeTime.format('HH[h]mm'));
+        }
+});
 
 controller.hears(['uptime', 'identify yourself', 'who are you', 'what is your name'],
     'direct_message,direct_mention,mention', function(bot, message) {
