@@ -247,7 +247,7 @@ controller.hears(['cc', 'café', 'coffee', 'caf'],
         var timeToWait = Math.round(Math.random() * 60);
         var coffeeTime = now.add(timeToWait, 'minutes');
 		
-        var response = ":coffee: Ecoute bien petit humain, voici l'heure de ton prochain café: {0}"
+        var response = ":coffee: Écoutes bien petit humain, voici l'heure de ton prochain café: {0}"
             .replace(/\{0\}/, coffeeTime.format('HH[h]mm'));
 		
         bot.reply(message, response);
