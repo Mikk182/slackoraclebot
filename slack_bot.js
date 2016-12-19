@@ -244,11 +244,11 @@ controller.hears(['cc', 'café', 'coffee', 'caf'],
         var uptime = formatUptime(process.uptime());
 
         var now = moment().tz("Europe/Paris");
-        var newMinute = Math.floor(Math.random() * (60 - now.minutes())) + now.minutes();
+        var timeToWait = Math.round(Math.random() * 60);
+        var coffeeTime = now.add(timeToWait, 'minutes');
 		
-        var response = ":coffee: Voici l'heure de ton prochain café: {0}h{1}, humain !"
-            .replace(/\{0\}/, now.hours())
-            .replace(/\{1\}/, newMinute);
+        var response = ":coffee: Ecoute bien petit humain, voici l'heure de ton prochain café: {0}"
+            .replace(/\{0\}/, coffeeTime.local().format('HH[h]mm'));
 		
         bot.reply(message, response);
     });
