@@ -237,15 +237,18 @@ controller.hears(['bien', 'good', 'nice', 'cool', 'bueno', 'fine', 'well'],
 
     });
 	
-controller.hears(['CC', 'café', 'coffee', 'caf'],
+controller.hears(['cc', 'café', 'coffee', 'caf'],
     'direct_message,direct_mention,mention', function(bot, message) {
 
         var hostname = os.hostname();
         var uptime = formatUptime(process.uptime());
 
-		var e = moment().tz("Europe/Paris"), o = e.minutes(), a = Math.floor(Math.random()*(60-o))+o;
+        var now = moment().tz("Europe/Paris");
+        var newMinute = Math.floor(Math.random() * (60 - now.minutes())) + now.minutes();
 		
-		var response = ":coffee: Voici l'heure de ton prochain café: {0}h{1}, humain !".replace(/\{0\}/,e.hours()).replace(/\{1\}/,a);
+        var response = ":coffee: Voici l'heure de ton prochain café: {0}h{1}, humain !"
+            .replace(/\{0\}/, now.hours())
+            .replace(/\{1\}/, newMinute);
 		
         bot.reply(message, response);
     });
