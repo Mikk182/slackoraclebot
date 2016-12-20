@@ -255,13 +255,13 @@ controller.hears(['cc', 'café', 'coffee', 'caf'],
                 
                 coffeeTime = coffeeTime.add(Math.round(Math.random() * 15), 'minutes'); 
                 
-                bot.reply(message,  'Puisque tu insistes, voici la nouvelle heure: ' 
-                    + coffeeTime.format('HH[h]mm') + ' :triumph:');
+                bot.reply(message,  'Puisque tu insistes, voici la nouvelle heure : *' 
+                    + coffeeTime.format('HH[h]mm') + '* :triumph:');
                 
             } else {
                 
-                bot.reply(message, 'Hahaha... Misérable humain! Tu ôses remettre en question la parole de l\'oracle?'
-                    + ' :point_down: Ton prochain café est à ' + coffeeTime.format('HH[h]mm'));
+                bot.reply(message, 'Hahaha... Misérable humain ! Tu ôses remettre en question la parole de l\'oracle ?'
+                    + ' :point_down: Ton prochain café est à *' + coffeeTime.format('HH[h]mm') + '*');
             }            
         } else {
             
@@ -269,8 +269,8 @@ controller.hears(['cc', 'café', 'coffee', 'caf'],
             
             coffeeTime = now.add(Math.round(Math.random() * 60), 'minutes'); 
             
-            bot.reply(message, ':coffee: Écoutes bien petit humain, voici l\'heure de ton prochain café: ' 
-                + coffeeTime.format('HH[h]mm'));
+            bot.reply(message, ':coffee: Écoutes bien petit humain, voici l\'heure de ton prochain café : *' 
+                + coffeeTime.format('HH[h]mm') + '*');
         }
 });
 
