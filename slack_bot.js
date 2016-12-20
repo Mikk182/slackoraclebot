@@ -262,9 +262,9 @@ controller.hears(['cc', 'café', 'coffee', 'caf'],
             
             tentatives++;
             
-            if (tentatives >= 5) {
+            if (tentatives >= 5) {                
                 
-                coffeeTime = coffeeTime.add(Math.round(Math.random() * 15), 'minutes'); 
+                coffeeTime = coffeeTime.add(Math.floor(Math.random() * 15) + 1, 'minutes'); 
                 
                 bot.reply(message,  'Puisque tu insistes, voici la nouvelle heure : *' 
                     + coffeeTime.format('HH[h]mm') + '*. :triumph:');
