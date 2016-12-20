@@ -239,7 +239,7 @@ controller.hears(['bien', 'good', 'nice', 'cool', 'bueno', 'fine', 'well'],
 var coffeeTime = moment().tz("Europe/Paris");
 var tentatives = 0;
 
-function GetNeed(message) {
+function GetNeedIndex(message) {
     
     var regEx = /ne+d/igm.exec(message.text);
     
@@ -255,8 +255,6 @@ controller.hears(['cc', 'café', 'coffee', 'caf'],
     
         var hostname = os.hostname();
         var uptime = formatUptime(process.uptime());
-    
-        bot.reply(message, '_need index: ' + GetNeed(message) + '_');
     
         var now = moment().tz("Europe/Paris"); 
 
@@ -280,7 +278,11 @@ controller.hears(['cc', 'café', 'coffee', 'caf'],
             
             tentatives = 0;
             
-            coffeeTime = now.add(Math.round(Math.random() * 60), 'minutes'); 
+            var timeLeft = Math.floor(Math.random() * 61);
+            
+            var bonusTime = Math.floor(Math.random() * GetNeedIndex(message));            
+            
+            coffeeTime = now.add(Math.max(0, timeLeft - bonusTime), 'minutes'); 
             
             bot.reply(message, ':coffee: Écoutes bien petit humain, voici l\'heure de ton prochain café : *' 
                 + coffeeTime.format('HH[h]mm') + '*.');
@@ -296,7 +298,6 @@ controller.hears(['uptime', 'identify yourself', 'who are you', 'what is your na
         bot.reply(message,
             ':robot_face: I am a bot named <@' + bot.identity.name +
              '>. I have been running for ' + uptime + ' on ' + hostname + '.');
-
     });
 
 controller.hears(['merci', 'thanks', 'thank you', 'ty', 'tks'],
