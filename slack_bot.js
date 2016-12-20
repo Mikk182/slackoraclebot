@@ -241,7 +241,7 @@ var tentatives = 0;
 
 function GetNeed(message) {
     
-    var regEx = /ne+d/igm.exec(message);
+    var regEx = /ne+d/igm.exec(message.text);
     
     if (regEx) {
         return regEx[0].length - 3;
