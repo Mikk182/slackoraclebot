@@ -278,7 +278,7 @@ controller.hears(['cc', 'café', 'coffee', 'caf'],
             
             tentatives = 0;
             
-            var timeLeft = Math.floor(Math.random() * 61);
+            var timeLeft = Math.floor(Math.random() * 31);
             
             var bonusTime = Math.floor(Math.random() * GetNeedIndex(message));            
             
