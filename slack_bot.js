@@ -353,7 +353,7 @@ function formatUptime(uptime) {
     return uptime;
 }
 
-controller.hears(['coucou', 'slt', 'salut', 'yo', 'bonjour', 'youhou', 'hello'], 'message', async(bot, message) => {
+controller.hears(['coucou', 'slt', 'salut', 'yo', 'bonjour', 'youhou', 'hello'], 'message', function(bot, message) => {
 
      controller.storage.users.get(message.user, function(err, user) {
         if (user && user.name) {
