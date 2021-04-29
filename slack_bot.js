@@ -352,3 +352,19 @@ function formatUptime(uptime) {
     uptime = uptime + ' ' + unit;
     return uptime;
 }
+
+controller.hears(['coucou', 'slt', 'salut', 'yo', 'bonjour', 'youhou', 'hello'], 'message', async(bot, message) => {
+
+     controller.storage.users.get(message.user, function(err, user) {
+        if (user && user.name) {
+            bot.reply(message, 'Hello *' + user.name + '* !!');
+        } else {
+            if(message.user) {
+                bot.reply(message, 'Hello *' + message.user + '* !!');
+            } else {
+                bot.reply(message, 'Hello humain !');
+            }
+        }
+    });
+
+});
