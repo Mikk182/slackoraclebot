@@ -81,6 +81,35 @@ var bot = controller.spawn({
     token: process.env.token
 }).startRTM();
 
+
+controller.hears(['coucou', 'slt', 'salut', 'yo', 'bonjour', 'youhou', 'hello'], 'message', function(bot, message) {
+
+     controller.storage.users.get(message.user, function(err, user) {
+        if (user && user.name) {
+            bot.reply(message, 'Hello *' + user.name + '* !!');
+        } else {
+            if(message.user) {
+                bot.reply(message, 'Hello *' + message.user + '* !!');
+            } else {
+                bot.reply(message, 'Hello humain !');
+            }
+        }
+    });
+
+});
+
+controller.hears('.*','message', function(bot, message) {
+
+    bot.reply(message, 'I heard: ' + message.text);
+
+});
+
+controller.on('event', function(bot, message) {
+    
+    bot.reply(message,'I received an event of type ' + message.type);
+    
+});
+
 controller.hears(['hello', 'hi'], 'direct_message,direct_mention,mention', function(bot, message) {
 
     bot.api.reactions.add({
@@ -352,29 +381,3 @@ function formatUptime(uptime) {
     uptime = uptime + ' ' + unit;
     return uptime;
 }
-
-controller.hears(['coucou', 'slt', 'salut', 'yo', 'bonjour', 'youhou', 'hello'], 'message', function(bot, message) {
-
-     controller.storage.users.get(message.user, function(err, user) {
-        if (user && user.name) {
-            bot.reply(message, 'Hello *' + user.name + '* !!');
-        } else {
-            if(message.user) {
-                bot.reply(message, 'Hello *' + message.user + '* !!');
-            } else {
-                bot.reply(message, 'Hello humain !');
-            }
-        }
-    });
-
-});
-
-controller.hears('.*','message', async(bot, message) => {
-
-    await bot.reply(message, 'I heard: ' + message.text);
-
-});
-
-controller.on('event', async(bot, message) => {
-    await bot.reply(message,'I received an event of type ' + message.type);
-});
