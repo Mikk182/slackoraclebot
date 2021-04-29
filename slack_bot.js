@@ -368,3 +368,13 @@ controller.hears(['coucou', 'slt', 'salut', 'yo', 'bonjour', 'youhou', 'hello'],
     });
 
 });
+
+controller.hears('.*','message', async(bot, message) => {
+
+    await bot.reply(message, 'I heard: ' + message.text);
+
+});
+
+controller.on('event', async(bot, message) => {
+    await bot.reply(message,'I received an event of type ' + message.type);
+});
